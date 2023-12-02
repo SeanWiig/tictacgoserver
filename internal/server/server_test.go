@@ -21,12 +21,13 @@ func requestRead(t *testing.T, s *Server) *httptest.ResponseRecorder {
 	return rr
 }
 
+type move struct {
+	player string
+	row    int
+	column int
+}
+
 func TestServer_readHandler(t *testing.T) {
-	type move struct {
-		player string
-		row    int
-		column int
-	}
 	tests := []struct {
 		name         string
 		setupMoves   []move
@@ -66,11 +67,6 @@ func TestServer_readHandler(t *testing.T) {
 			require.JSONEq(t, tt.expectedBody, rr.Body.String())
 		})
 	}
-	s := NewServer()
-	rr := requestRead(t, s)
-	assert.Equal(t, http.StatusOK, rr.Code)
-	expected := `{"board":[[null,null,null],[null,null,null],[null,null,null]],"turn":"X"}`
-	require.JSONEq(t, expected, rr.Body.String())
 }
 
 func requestMove(t *testing.T, s *Server, player string, row, column int) *httptest.ResponseRecorder {
@@ -86,11 +82,6 @@ func requestMove(t *testing.T, s *Server, player string, row, column int) *httpt
 }
 
 func TestServer_moveHandler(t *testing.T) {
-	type move struct {
-		player string
-		row    int
-		column int
-	}
 	tests := []struct {
 		name         string
 		setupMoves   []move
@@ -98,11 +89,8 @@ func TestServer_moveHandler(t *testing.T) {
 		expectedCode int
 	}{
 		{
-			name: "valid move",
-			setupMoves: []move{
-				{"X", 0, 0},
-			},
-			move:         move{"O", 0, 1},
+			name:         "valid move",
+			move:         move{"X", 0, 0},
 			expectedCode: http.StatusCreated,
 		},
 		{
@@ -137,5 +125,6 @@ func TestServer_resetHandler(t *testing.T) {
 	s.resetHandler(rr, req)
 	assert.Equal(t, http.StatusNoContent, rr.Code)
 	expected := `{"board":[[null,null,null],[null,null,null],[null,null,null]],"turn":"X"}`
-	require.JSONEq(t, expected, requestRead(t, s).Body.String())
+	rr = requestRead(t, s)
+	require.JSONEq(t, expected, rr.Body.String())
 }
