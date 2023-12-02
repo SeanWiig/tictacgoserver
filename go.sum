@@ -1,0 +1,4 @@
+github.com/chrisfregly/tictactoe v0.0.0-20230814155956-7ca69a8ad0a2 h1:vRwHZbNQAlSE62OZUth3onaYHA9ZZcndnhJx3ciRkV4=
+github.com/chrisfregly/tictactoe v0.0.0-20230814155956-7ca69a8ad0a2/go.mod h1:F5UMrTY3xuv0WgRVfVWR1kkd8He5Vh1xZWc/xEg+HUk=
+github.com/go-chi/chi/v5 v5.0.10 h1:rLz5avzKpjqxrYwXNfmjkrYYXOyLJd37pz53UFHC6vk=
+github.com/go-chi/chi/v5 v5.0.10/go.mod h1:DslCQbL2OYiznFReuXYUmQ2hGd1aDpCnlMNITLSKoi8=
